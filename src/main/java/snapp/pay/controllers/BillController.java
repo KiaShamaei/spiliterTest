@@ -1,5 +1,7 @@
 package snapp.pay.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import snapp.pay.dto.BillRequestDto;
 import snapp.pay.services.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping(value = "/v1/bill")
+@Tag(name = "Bill Api")
 public class BillController extends AbstractController {
 
     @Autowired
@@ -26,6 +29,8 @@ public class BillController extends AbstractController {
         return model;
     }
 
+
+    @Operation(summary = "this mehtod make group bill" ,description = "ok status")
     @PostMapping(value = "/group")
     public ResponseEntity<?> addNewBillToGroup(@RequestBody BillRequestDto billRequestDto) {
 
@@ -34,6 +39,7 @@ public class BillController extends AbstractController {
     }
 
     @PostMapping(value = "")
+    @Operation(summary = "this mehtod make a bill" ,description = "ok status")
     public ResponseEntity<?> addNewBill(@RequestBody BillRequestDto billRequestDto) {
 
         billServiceImpl.addBill(billRequestDto);
@@ -41,6 +47,7 @@ public class BillController extends AbstractController {
     }
 
     @GetMapping(value = "/{billId}")
+    @Operation(summary = "this mehtod return a bill" ,description = "ok billResponse")
     public ResponseEntity<BillRequestDto> getBill(@PathVariable(value = "billId") Long billId) {
 
         BillRequestDto billResponse = billServiceImpl.getBillDetails(billId);

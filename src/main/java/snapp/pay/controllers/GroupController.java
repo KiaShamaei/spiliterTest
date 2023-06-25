@@ -1,5 +1,7 @@
 package snapp.pay.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import snapp.pay.dto.GroupRequestDto;
 import snapp.pay.dto.GroupResponseDto;
 import snapp.pay.entities.Group;
@@ -17,19 +19,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/group")
-public class GroupController extends AbstractController {
+@Tag(name = "Group Api")
+public class GroupController {
 
     @Autowired
     private GroupService groupServiceImpl;
 
-    @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        ModelAndView model = new ModelAndView("HelloWorldPage");
-        model.addObject("msg", "hello world");
-        return model;
-    }
+
 
     @PostMapping(value = "")
+    @Operation(summary = "this mehtod make a group of bill" ,description = "ok status")
     public ResponseEntity<GroupResponseDto> createNewGroup(@RequestBody GroupRequestDto json) {
 
         GroupResponseDto group = groupServiceImpl.addNewGroup(json);
@@ -37,6 +36,7 @@ public class GroupController extends AbstractController {
     }
 
     @GetMapping(value = "")
+    @Operation(summary = "this mehtod return a list off all group bill" ,description = "List<GroupResponseDto>")
     public ResponseEntity<List<GroupResponseDto>> getGroups() {
 
         List<GroupResponseDto> groupList = groupServiceImpl.getAllGroups();
@@ -44,6 +44,7 @@ public class GroupController extends AbstractController {
     }
 
     @PutMapping(value = "/addUsers")
+    @Operation(summary = "this mehtod add a user to a group of bill" ,description = "Group")
     public ResponseEntity<Group> addUsersToGroup(@RequestBody GroupRequestDto groupRequestDto) {
 
         groupServiceImpl.addUserToGroup(groupRequestDto);

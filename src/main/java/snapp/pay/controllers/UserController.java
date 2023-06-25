@@ -1,5 +1,7 @@
 package snapp.pay.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import snapp.pay.dto.UserNetWorthDto;
 import snapp.pay.dto.UserRequestDto;
 import snapp.pay.dto.UserResponseDto;
@@ -20,7 +22,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/v1/user")
-public class UserController extends AbstractController {
+@Tag(name = "User Api")
+public class UserController  {
 
     @Autowired
     private UserService userService;
@@ -28,14 +31,9 @@ public class UserController extends AbstractController {
     @Autowired
     private UserAssetLiabilitiesService userAssetLiabilitiesService;
 
-    @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-        ModelAndView model = new ModelAndView("HelloWorldPage");
-        model.addObject("msg", "hello world");
-        return model;
-    }
 
     @PostMapping(value = "")
+    @Operation(summary = "add new user " ,description = "ok status")
     public ResponseEntity<User> createNewUser(@RequestBody UserRequestDto json) {
 
         User usr = userService.addNewUser(json);
@@ -43,6 +41,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "")
+    @Operation(summary = "this mehtod return all users " ,description = "List<UserResponseDto>")
     public ResponseEntity<List<UserResponseDto>> getUser() {
 
         List<UserResponseDto> userList = userService.getAllUsers();
@@ -50,6 +49,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "/{userid}")
+    @Operation(summary = "this mehtod return a users by id" ,description = "UserResponseDto")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable(value = "userid") Long userId) {
 
         UserResponseDto user = userService.getUser(userId);
@@ -57,6 +57,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "/email")
+    @Operation(summary = "this mehtod return a users by email" ,description = "UserResponseDto")
     public ResponseEntity<UserResponseDto> getUserByEmailId(@RequestParam(value = "emailId") String emailId) {
 
         UserResponseDto user = userService.getUserByEmailId(emailId);
@@ -64,6 +65,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "/{userid}/worth")
+    @Operation(summary = "this mehtod return a worth users by id" ,description = "UserNetWorthDto")
     public ResponseEntity<UserNetWorthDto> getMyNetWorth(@PathVariable(value = "userid") Long userId) {
 
         UserNetWorthDto userNetWorth = userAssetLiabilitiesService.getMyNetWorth(userId);
@@ -71,6 +73,7 @@ public class UserController extends AbstractController {
     }
 
     @GetMapping(value = "/{userid}/gangs")
+    @Operation(summary = "this mehtod return all group users by user id" ,description = "UsersAllGangsDto")
     public ResponseEntity<UsersAllGangsDto> getAllMyGangs(@PathVariable(value = "userid") Long userId) {
 
         UsersAllGangsDto userNetWorth = userAssetLiabilitiesService.getMyGroupwiseNetWorth(userId);

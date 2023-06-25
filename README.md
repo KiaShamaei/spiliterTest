@@ -21,8 +21,13 @@ The following guides illustrate how to use some features project:
 * [ $ docker build -t my-mysql . ]
 * [ $ docker run -d -p 3356:3306 --name my-mysql-container my-mysql  ]
 * [ check container to be up with "$docker ps" ]
+* [ after first time check docker container "$docker ps -a" and then "$docker start containerName" ]
 * [ run this command "$mvn clean package" This will build the application and generate a JAR file in the ]
+* [ to examine dataBase "$docker exec -it <container_id> bash" this make bash after that "$mysql -u <username> -p<password> -h localhost <database_name>" ]
 * [ run this command "$java -jar target/spiliter-0.0.1-SNAPSHOT.jar This will start the application and run on port::8098 which define in application.properties]
+* [ or run this command "$mvn spring-boot:run" ]
+* [ context path for all api is snapp ]
+* [ you can find Swagger doc in http://localhost:8098/snapp/swagger-ui/index.html ]
 * [ or run this command "$mvn spring-boot:run" ]
 
 
