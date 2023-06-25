@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService {
                 .name(userRequestDto.getName())
                 .email(userRequestDto.getEmail())
                 .contact(userRequestDto.getContact())
+                .password(userRequestDto.getPassword())
                 .build();
         userRepository.save(user);
         return user;

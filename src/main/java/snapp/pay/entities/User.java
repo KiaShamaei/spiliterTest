@@ -25,6 +25,9 @@ public class User  extends SuperEntity {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "contact")
     private String contact;
 
