@@ -1,5 +1,6 @@
 package snapp.pay.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import snapp.pay.dto.UserNetWorthDto;
 import snapp.pay.dto.UserRequestDto;
 import snapp.pay.dto.UserResponseDto;
@@ -19,26 +20,27 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public User addNewUser(UserRequestDto userRequestDto) {
 
-        User existingUser = userRepository.findByEmail(userRequestDto.getEmail());
-        if (existingUser != null) {
+        var existingUser = userRepository.findByEmail(userRequestDto.getEmail());
+        if (existingUser.isPresent()) {
             throw new CustomerAlreadyExistsException("Customer with email id " + userRequestDto + " already exists");
         }
         User user = User.builder()
                 .name(userRequestDto.getName())
                 .email(userRequestDto.getEmail())
                 .contact(userRequestDto.getContact())
-                .password(userRequestDto.getPassword())
+                .password(passwordEncoder.encode(userRequestDto.getPassword()))
                 .build();
         userRepository.save(user);
         return user;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<UserResponseDto> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
         return dtoList;
     }
 
-    @Transactional(readOnly = true)
+
     @Override
     public UserResponseDto getUser(Long userId) {
         User user = userRepository.findById(userId).get();
@@ -68,11 +70,12 @@ public class UserServiceImpl implements UserService {
         return userResponseDto;
     }
 
-    @Transactional(readOnly = true)
+
     @Override
     public UserResponseDto getUserByEmailId(String emailId) {
 
-        User user = userRepository.findByEmail(emailId);
+        User user = userRepository.findByEmail(emailId).orElseThrow(
+                ()->new CustomerAlreadyExistsException("Customer with email id " + emailId + " already exists"));
         UserResponseDto userResponseDto = UserResponseDto.builder()
                 .id(user.getId())
                 .name(user.getName())

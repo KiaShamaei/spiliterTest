@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/user")
+@RequestMapping(value = "/")
 @Tag(name = "User Api")
 public class UserController  {
 
@@ -32,13 +32,7 @@ public class UserController  {
     private UserAssetLiabilitiesService userAssetLiabilitiesService;
 
 
-    @PostMapping(value = "")
-    @Operation(summary = "add new user " ,description = "ok status")
-    public ResponseEntity<User> createNewUser(@RequestBody UserRequestDto json) {
 
-        User usr = userService.addNewUser(json);
-        return new ResponseEntity<>(usr, HttpStatus.OK);
-    }
 
     @GetMapping(value = "")
     @Operation(summary = "this mehtod return all users " ,description = "List<UserResponseDto>")
@@ -73,10 +67,16 @@ public class UserController  {
     }
 
     @GetMapping(value = "/{userid}/gangs")
-    @Operation(summary = "this mehtod return all group users by user id" ,description = "UsersAllGangsDto")
+    @Operation(summary = "this method return all group users by user id" ,description = "UsersAllGangsDto")
     public ResponseEntity<UsersAllGangsDto> getAllMyGangs(@PathVariable(value = "userid") Long userId) {
 
         UsersAllGangsDto userNetWorth = userAssetLiabilitiesService.getMyGroupwiseNetWorth(userId);
         return new ResponseEntity<>(userNetWorth, HttpStatus.OK);
     }
+    @GetMapping(value = "/test")
+    @Operation(summary = "this method " ,description = "UsersAllGangsDto")
+    public String getTest() {
+        return"Hello world";
+    }
+
 }
