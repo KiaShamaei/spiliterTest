@@ -13,7 +13,10 @@ import snapp.pay.repositories.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * JwtUserDetailsService manage userDetails for spring security
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;

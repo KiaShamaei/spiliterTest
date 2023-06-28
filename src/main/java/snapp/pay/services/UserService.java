@@ -1,17 +1,21 @@
 package snapp.pay.services;
 
 
-import snapp.pay.dto.UserNetWorthDto;
+
 import snapp.pay.dto.UserRequestDto;
 import snapp.pay.dto.UserResponseDto;
 import snapp.pay.entities.User;
-
 import java.util.List;
 
 
+/**
+ *
+ * @Author Kiarash Shamaei 2023-06-25
+ */
+
 public interface UserService {
 
-    User addNewUser(UserRequestDto userRequestDto);
+    UserResponseDto addNewUser(UserRequestDto userRequestDto);
 
     List<UserResponseDto> getAllUsers();
 

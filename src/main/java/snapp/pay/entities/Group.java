@@ -5,6 +5,10 @@ import javax.persistence.*;
 import java.util.List;
 
 
+/**
+ *  Group Keep data of group
+ *  @Author Kiarash Shamaei 2023-06-25
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

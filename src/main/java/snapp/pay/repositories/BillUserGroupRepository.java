@@ -7,6 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+/**
+ *
+ * @Author Kiarash Shamaei 2023-06-25
+ */
+
 @Repository
 public interface BillUserGroupRepository extends JpaRepository<BillUserGroup, Long> {
 

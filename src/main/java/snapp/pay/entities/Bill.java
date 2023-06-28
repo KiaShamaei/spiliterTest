@@ -3,7 +3,10 @@ package snapp.pay.entities;
 import lombok.*;
 import javax.persistence.*;
 
-
+/**
+ *  Bill table
+ *  @Author Kiarash Shamaei 2023-06-25
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

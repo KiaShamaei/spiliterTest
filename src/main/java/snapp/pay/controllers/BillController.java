@@ -14,8 +14,12 @@ import org.springframework.web.servlet.mvc.AbstractController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * BillController
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @RestController
-@RequestMapping(value = "/v1/bill")
+@RequestMapping(value = "/api/v1")
 @Tag(name = "Bill Api")
 public class BillController extends AbstractController {
 
@@ -30,24 +34,24 @@ public class BillController extends AbstractController {
     }
 
 
-    @Operation(summary = "this mehtod make group bill" ,description = "ok status")
-    @PostMapping(value = "/group")
+    @Operation(summary = "this method make add bill to group " ,description = "ok status")
+    @PostMapping(value = "/bill/group")
     public ResponseEntity<?> addNewBillToGroup(@RequestBody BillRequestDto billRequestDto) {
 
         billServiceImpl.addBillToGroup(billRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "")
-    @Operation(summary = "this mehtod make a bill" ,description = "ok status")
+    @PostMapping(value = "/bill")
+    @Operation(summary = "this method make a bill" ,description = "ok status")
     public ResponseEntity<?> addNewBill(@RequestBody BillRequestDto billRequestDto) {
 
         billServiceImpl.addBill(billRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{billId}")
-    @Operation(summary = "this mehtod return a bill" ,description = "ok billResponse")
+    @GetMapping(value = "/bill/{billId}")
+    @Operation(summary = "this methood return a bill" ,description = "ok billResponse")
     public ResponseEntity<BillRequestDto> getBill(@PathVariable(value = "billId") Long billId) {
 
         BillRequestDto billResponse = billServiceImpl.getBillDetails(billId);

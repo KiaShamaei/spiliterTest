@@ -19,6 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  GroupService do business of Group
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Service
 public class GroupServiceImpl implements GroupService {
 

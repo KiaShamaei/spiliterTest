@@ -20,6 +20,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 import snapp.pay.services.JwtUserDetailsService;
 
+/**
+ *  JwtRequestFilter responsible to check validation of  the Authorization for each request in filter chain
+ *  @Author Kiarash Shamaei 2023-06-25
+ */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 

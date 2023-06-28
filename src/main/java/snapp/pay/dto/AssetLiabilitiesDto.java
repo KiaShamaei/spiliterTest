@@ -6,6 +6,10 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * AssetLiabilitiesDto this responsible for take billName and share
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,7 +18,6 @@ import java.util.List;
 public class AssetLiabilitiesDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
     private String billName;
     private Double share;
 

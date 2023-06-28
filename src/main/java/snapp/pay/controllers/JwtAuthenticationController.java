@@ -10,16 +10,21 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import snapp.pay.config.security.JwtTokenUtil;
 import snapp.pay.dto.JwtRequest;
 import snapp.pay.dto.JwtResponse;
 import snapp.pay.dto.UserRequestDto;
+import snapp.pay.dto.UserResponseDto;
 import snapp.pay.entities.User;
 import snapp.pay.services.JwtUserDetailsService;
 import snapp.pay.services.UserService;
 
-
+/**
+ * JwtAuthenticationController handle register and login
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @RestController
 @RequestMapping(value = "/auth")
 @CrossOrigin
@@ -38,15 +43,6 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest request) throws Exception {
-
-//        authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
-//
-//        final UserDetails userDetails = userDetailsService
-//                .loadUserByUsername(authenticationRequest.getEmail());
-//
-//        final String token = jwtTokenUtil.generateToken(userDetails);
-//
-//        return ResponseEntity.ok(new JwtResponse(token));
         try {
              authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -64,19 +60,10 @@ public class JwtAuthenticationController {
 
     @PostMapping(value = "/register")
     @Operation(summary = "add new user " ,description = "ok status")
-    public ResponseEntity<User> createNewUser(@RequestBody UserRequestDto json) {
+    public ResponseEntity<UserResponseDto> createNewUser(@RequestBody @Validated UserRequestDto json) {
 
-        User usr = userService.addNewUser(json);
-        return new ResponseEntity<>(usr, HttpStatus.OK);
+        UserResponseDto usr = userService.addNewUser(json);
+        return new ResponseEntity<UserResponseDto>(usr, HttpStatus.OK);
     }
 
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
 }

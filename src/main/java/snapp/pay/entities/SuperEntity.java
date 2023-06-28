@@ -5,6 +5,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
+/**
+ *  SuperEntity is share properties for all entity
+ *  @Author Kiarash Shamaei 2023-06-25
+ */
 public class SuperEntity {
 
     @Temporal(TemporalType.TIMESTAMP)

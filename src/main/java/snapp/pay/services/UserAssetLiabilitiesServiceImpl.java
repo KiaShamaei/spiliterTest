@@ -10,12 +10,14 @@ import snapp.pay.repositories.BillUserGroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *  UserAssetLiabilitiesService do business of user asset for pay share
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Service
-public class UserAssetLiabilitiesSarviceImpl implements UserAssetLiabilitiesService {
+public class UserAssetLiabilitiesServiceImpl implements UserAssetLiabilitiesService {
 
     @Autowired
     private BillUserGroupRepository billUserGroupRepository;
@@ -51,7 +53,6 @@ public class UserAssetLiabilitiesSarviceImpl implements UserAssetLiabilitiesServ
         return userNetWorthDto;
     }
 
-    @Transactional(readOnly = true)
     @Override
     public UsersAllGangsDto getMyGroupwiseNetWorth(Long userId) {
 

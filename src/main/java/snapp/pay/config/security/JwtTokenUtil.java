@@ -15,6 +15,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+/**
+ * Component to code and decode JWT
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Component
 public class JwtTokenUtil implements Serializable {
 

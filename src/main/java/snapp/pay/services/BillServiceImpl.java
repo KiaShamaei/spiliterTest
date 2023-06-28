@@ -14,6 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 
+/**
+ *  BillService do business of Bill
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 
 @Service
 public class BillServiceImpl implements BillService {

@@ -1,7 +1,11 @@
 package snapp.pay.exceptions;
 
 
-public class CustomerAlreadyExistsException extends CustomExceptionHandler {
+/**
+ * Custom error exception for CustomerAlready exist, catch with CustomExceptionHandler
+ * @Author Kiarash Shamaei 2023-06-25
+ */
+public class CustomerAlreadyExistsException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 

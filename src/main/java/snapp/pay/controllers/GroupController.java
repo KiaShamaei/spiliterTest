@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * GroupController handle group request
+ * @Author Kiarash Shamaei 2023-06-25
+ */
+
 @RestController
-@RequestMapping(value = "/v1/group")
+@RequestMapping(value = "/api/v1")
 @Tag(name = "Group Api")
 public class GroupController {
 
@@ -27,24 +27,24 @@ public class GroupController {
 
 
 
-    @PostMapping(value = "")
-    @Operation(summary = "this mehtod make a group of bill" ,description = "ok status")
+    @PostMapping(value = "/group")
+    @Operation(summary = "this method make a group " ,description = "ok status")
     public ResponseEntity<GroupResponseDto> createNewGroup(@RequestBody GroupRequestDto json) {
 
         GroupResponseDto group = groupServiceImpl.addNewGroup(json);
         return new ResponseEntity<>(group, HttpStatus.OK);
     }
 
-    @GetMapping(value = "")
-    @Operation(summary = "this mehtod return a list off all group bill" ,description = "List<GroupResponseDto>")
+    @GetMapping(value = "/group")
+    @Operation(summary = "this method return a list off all groups" ,description = "List<GroupResponseDto>")
     public ResponseEntity<List<GroupResponseDto>> getGroups() {
 
         List<GroupResponseDto> groupList = groupServiceImpl.getAllGroups();
         return new ResponseEntity<>(groupList, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/addUsers")
-    @Operation(summary = "this mehtod add a user to a group of bill" ,description = "Group")
+    @PutMapping(value = "/group/addUsers")
+    @Operation(summary = "this method add a user to a group" ,description = "Group")
     public ResponseEntity<Group> addUsersToGroup(@RequestBody GroupRequestDto groupRequestDto) {
 
         groupServiceImpl.addUserToGroup(groupRequestDto);

@@ -1,7 +1,6 @@
 package snapp.pay.services;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import snapp.pay.dto.UserNetWorthDto;
 import snapp.pay.dto.UserRequestDto;
 import snapp.pay.dto.UserResponseDto;
 import snapp.pay.entities.User;
@@ -14,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ *  UserService  do business of user
+ * @Author Kiarash Shamaei 2023-06-25
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,19 +25,29 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Transactional
+
     @Override
-    public User addNewUser(UserRequestDto userRequestDto) {
+    public UserResponseDto addNewUser(UserRequestDto userRequestDto) {
 
         var existingUser = userRepository.findByEmail(userRequestDto.getEmail());
         if (existingUser.isPresent()) {
             throw new CustomerAlreadyExistsException("Customer with email id " + userRequestDto + " already exists");
         }
+        var user = this.saveUser(userRequestDto);
+        return UserResponseDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .contact(user.getContact())
+                .build();
+    }
+    //save user
+    private User saveUser(UserRequestDto dto){
         User user = User.builder()
-                .name(userRequestDto.getName())
-                .email(userRequestDto.getEmail())
-                .contact(userRequestDto.getContact())
-                .password(passwordEncoder.encode(userRequestDto.getPassword()))
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .contact(dto.getContact())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .build();
         userRepository.save(user);
         return user;

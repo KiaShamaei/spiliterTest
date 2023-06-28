@@ -2,6 +2,10 @@ package snapp.pay.enums;
 
 import lombok.Getter;
 
+/**
+ *  BillStatus show billStatus
+ *  @Author Kiarash Shamaei 2023-06-25
+ */
 @Getter
 public enum BillStatus {
 
