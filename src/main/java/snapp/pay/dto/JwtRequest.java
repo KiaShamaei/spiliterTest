@@ -3,7 +3,6 @@ package snapp.pay.dto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -17,11 +16,11 @@ public class JwtRequest implements Serializable , UserDetails {
 
     private static final long serialVersionUID = 5926468583005150707L;
 
-    private String email;
+    private String username;
     private String password;
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class JwtRequest implements Serializable , UserDetails {
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.username;
     }
 
     @Override

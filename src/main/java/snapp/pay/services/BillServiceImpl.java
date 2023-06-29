@@ -1,7 +1,10 @@
 package snapp.pay.services;
 
+import lombok.extern.slf4j.Slf4j;
 import snapp.pay.dto.BillRequestDto;
 import snapp.pay.entities.*;
+import snapp.pay.enums.BillStatus;
+import snapp.pay.exceptions.BillNotFoundException;
 import snapp.pay.exceptions.GroupNotFoundException;
 import snapp.pay.repositories.BillRepository;
 import snapp.pay.repositories.BillUserGroupRepository;
@@ -20,6 +23,7 @@ import java.util.*;
  */
 
 @Service
+@Slf4j
 public class BillServiceImpl implements BillService {
 
     @Autowired
@@ -34,7 +38,7 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private BillUserGroupRepository billUserGroupRepository;
 
-    @Transactional
+
     @Override
     public void addBillToGroup(BillRequestDto billRequestDto) {
 
@@ -49,6 +53,7 @@ public class BillServiceImpl implements BillService {
         Bill bill = Bill.builder()
                 .name(billRequestDto.getBillName())
                 .billAmount(billRequestDto.getAmount())
+                .status(BillStatus.ACTIVE)
                 .gang(grp)
                 .build();
         billRepository.save(bill);
@@ -58,14 +63,36 @@ public class BillServiceImpl implements BillService {
         billUserGroupRepository.saveAll(billUserGroupList);
     }
 
+    @Override
+    public void addBillToGroup(Long billId, Long grpId) {
+        var bill = billRepository.findById(billId).orElseThrow(
+                ()-> new BillNotFoundException("Bill with id " + billId + " does not exists"));
+        var gang = groupRepository.findById(grpId).orElseThrow(
+                ()-> new GroupNotFoundException("Group with id " + grpId + " does not exists")
+        );
+        bill.setGang(gang);
+        billRepository.save(bill);
+    }
+
+    @Override
     @Transactional
+    public void balanceBillWithId(Long billId , Long userId) {
+        var billUser = billUserGroupRepository
+                .findByUserBill(userId,billId,BillStatus.ACTIVE)
+                .orElseThrow(()->new BillNotFoundException("NO bill match with this id and user with state Active"));
+        billUser.getBill().setStatus(BillStatus.SETTLED);
+        billUserGroupRepository.save(billUser);
+    }
+
+
     @Override
     public void addBill(BillRequestDto billRequestDto) {
 
-        List<BillUserGroup> billUserGroupList = calculateShares(billRequestDto, null);
+        List<BillUserGroup> billUserGroupList = this.calculateShares(billRequestDto, null);
         Bill bill = Bill.builder()
                 .name(billRequestDto.getBillName())
                 .billAmount(billRequestDto.getAmount())
+                .status(BillStatus.ACTIVE)
                 .build();
         billRepository.save(bill);
         for (BillUserGroup billUserGroup : billUserGroupList) {
@@ -76,7 +103,7 @@ public class BillServiceImpl implements BillService {
 
     private List<BillUserGroup> calculateShares(BillRequestDto billRequestDto, Group grp) {
 
-        List<BillUserGroup> billUserGroups;
+        List<BillUserGroup> billUserGroups ;
         if (grp != null) {
             billUserGroups = splitGroupUserShares(billRequestDto, grp);
         } else {
@@ -133,7 +160,7 @@ public class BillServiceImpl implements BillService {
             Contribution userOwedContribution = userContriOwe.get(user.getId());
             if ((userPaidContribution != null && userPaidContribution.getShareAmount() == null && userPaidContribution.getSharePercentage() == null)
                     || (userOwedContribution != null && userOwedContribution.getShareAmount() == null && userOwedContribution.getSharePercentage() == null)) {
-                System.out.println("No share data supplied");
+                log.info("No share data supplied");
                 System.exit(0);
             } else {
                 if (userPaidContribution != null) {

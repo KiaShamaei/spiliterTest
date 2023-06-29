@@ -1,6 +1,8 @@
 package snapp.pay.entities;
 
 import lombok.*;
+import snapp.pay.enums.BillStatus;
+
 import javax.persistence.*;
 
 /**
@@ -31,7 +33,8 @@ public class Bill extends SuperEntity {
     private Group gang;
 
     @Column(name = "status")
-    private Byte status;
+    @Enumerated(EnumType.STRING)
+    private BillStatus status;
 
     public Bill(String name, Double billAmount, Group gang) {
         this.name = name;

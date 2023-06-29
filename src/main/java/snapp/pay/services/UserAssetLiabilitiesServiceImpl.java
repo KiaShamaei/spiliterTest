@@ -22,14 +22,15 @@ public class UserAssetLiabilitiesServiceImpl implements UserAssetLiabilitiesServ
     @Autowired
     private BillUserGroupRepository billUserGroupRepository;
 
-    @Transactional(readOnly = true)
+
+    //this method find net value of each user by id
     @Override
     public UserNetWorthDto getMyNetWorth(Long userId) {
 
         List<AssetLiabilitiesDto> assets = new ArrayList<>();
         List<AssetLiabilitiesDto> liabilities = new ArrayList<>();
         Double netWorth = 0.0;
-        List<BillUserGroup> billUserGroupList = billUserGroupRepository.findByUserId(userId, Byte.valueOf(BillStatus.ACTIVE.getId().toString()));
+        List<BillUserGroup> billUserGroupList = billUserGroupRepository.findByUserId(userId, BillStatus.ACTIVE);
         for (BillUserGroup billUserGroup : billUserGroupList) {
 
             netWorth = Double.sum(netWorth, billUserGroup.getShare());
@@ -53,11 +54,12 @@ public class UserAssetLiabilitiesServiceImpl implements UserAssetLiabilitiesServ
         return userNetWorthDto;
     }
 
+    //this method find the status of payment users in group  user
     @Override
     public UsersAllGangsDto getMyGroupwiseNetWorth(Long userId) {
 
         List<GroupExpensesDto> expensesDtos = new ArrayList<>();
-        List<BillUserGroup> billUserGroupList = billUserGroupRepository.findByUserId(userId, Byte.valueOf(BillStatus.ACTIVE.getId().toString()));
+        List<BillUserGroup> billUserGroupList = billUserGroupRepository.findByUserId(userId, BillStatus.ACTIVE);
         for (BillUserGroup billUserGroup : billUserGroupList) {
 
             GroupExpensesDto groupExpensesDto = GroupExpensesDto.builder()

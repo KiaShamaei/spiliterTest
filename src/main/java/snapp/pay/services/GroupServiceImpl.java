@@ -7,6 +7,7 @@ import snapp.pay.entities.Group;
 import snapp.pay.entities.User;
 import snapp.pay.entities.UserGroup;
 import snapp.pay.exceptions.CustomerNotFoundException;
+import snapp.pay.exceptions.GroupNameAlreadyExistException;
 import snapp.pay.exceptions.GroupNotFoundException;
 import snapp.pay.exceptions.GroupWithoutAdminException;
 import snapp.pay.repositories.GroupRepository;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  *  GroupService do business of Group
@@ -41,6 +44,10 @@ public class GroupServiceImpl implements GroupService {
         if (groupRequestDto.getUserEmails() == null || groupRequestDto.getUserEmails().isEmpty()) {
             throw new GroupWithoutAdminException("User list is empty. Group without admin not possible!!!");
         }
+        Optional<Group> gr = groupRepository.findByName(groupRequestDto.getName());
+        if(gr.isPresent()){
+            throw new GroupNameAlreadyExistException("User group name Already exist please choose an other name ...");
+        }
         List<User> members = userRepository.findByEmailIn(groupRequestDto.getUserEmails());
         User admin = members.get(0);
 
@@ -51,12 +58,12 @@ public class GroupServiceImpl implements GroupService {
         groupRepository.save(group);
 
         List<UserGroup> userGroupList = new ArrayList<>();
-        for (User user : members) {
+        members.forEach(user -> {
             UserGroup usrGrp = new UserGroup(user);
             usrGrp.setGang(group);
             userGroupRepository.save(usrGrp);
             userGroupList.add(usrGrp);
-        }
+        });
         group.setUserGroups(userGroupList);
         GroupResponseDto dto = getGroupResponseDto(group);
         return dto;
@@ -71,16 +78,14 @@ public class GroupServiceImpl implements GroupService {
                 .contact(group.getAdminUser().getContact())
                 .build();
 
-        List<UserResponseDto> userList = new ArrayList<>();
-        for (UserGroup usrgrp : group.getUserGroups()) {
-            UserResponseDto responseDto = UserResponseDto.builder()
-                    .id(usrgrp.getUser().getId())
-                    .name(usrgrp.getUser().getName())
-                    .email(usrgrp.getUser().getEmail())
-                    .contact(usrgrp.getUser().getContact())
-                    .build();
-            userList.add(responseDto);
-        }
+        List<UserResponseDto> userList = group.getUserGroups().stream()
+                .map(usrgrp -> UserResponseDto.builder()
+                        .id(usrgrp.getUser().getId())
+                        .name(usrgrp.getUser().getName())
+                        .email(usrgrp.getUser().getEmail())
+                        .contact(usrgrp.getUser().getContact())
+                        .build())
+                .collect(Collectors.toList());
 
         GroupResponseDto dto = GroupResponseDto.builder()
                 .id(group.getId())

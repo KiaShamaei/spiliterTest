@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
  * @Author Kiarash Shamaei 2023-06-25
  */
 
-@Component
 public interface UserAssetLiabilitiesService {
 
     UserNetWorthDto getMyNetWorth(Long userId);

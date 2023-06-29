@@ -53,7 +53,17 @@ public class SecurityWebConfig {
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 // dont authenticate this particular request
         httpSecurity.authorizeRequests()
-                .antMatchers("/auth/**")
+                .antMatchers("/auth/**",
+                        "/",
+                        "/v3/api-docs/**",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/security",
+                        "/swagger-ui.html",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html/**",
+                        "/configuration/**",
+                        "/webjars/**")
                 .permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().

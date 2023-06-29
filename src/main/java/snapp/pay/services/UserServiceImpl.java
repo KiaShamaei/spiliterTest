@@ -28,10 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto addNewUser(UserRequestDto userRequestDto) {
-
-        var existingUser = userRepository.findByEmail(userRequestDto.getEmail());
+        var existingUser = userRepository.findByName(userRequestDto.getName());
         if (existingUser.isPresent()) {
-            throw new CustomerAlreadyExistsException("Customer with email id " + userRequestDto + " already exists");
+            throw new CustomerAlreadyExistsException("Customer with username " + userRequestDto + " already exists");
         }
         var user = this.saveUser(userRequestDto);
         return UserResponseDto.builder()

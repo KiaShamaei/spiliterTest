@@ -6,8 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import snapp.pay.dto.JwtRequest;
-import snapp.pay.entities.User;
 import snapp.pay.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -25,9 +23,10 @@ public class JwtUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = userRepository.findByEmail(username)
+        var user = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
         List<GrantedAuthority> authorities = new ArrayList<>();
 

@@ -22,19 +22,12 @@ import java.util.Map;
 public class BillRequestDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @NotBlank(message = "Name of Bill must not be blank! ")
     private String billName;
-
-    @NotNull(message = "amount of Bill must not be null! ")
     private Double amount;
-
-    @NotNull(message = "grpId of Bill must not be null! ")
     private Long grpId;
-
+    //get user id and paid value per
     private Map<Long, Contribution> userContriPaid;
-
     private Map<Long, Contribution> userContriOwe;
-
     public BillRequestDto(String billName, Double amount, Long grpId) {
         this.billName = billName;
         this.amount = amount;

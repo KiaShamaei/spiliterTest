@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Table(name = "user")
+@Table(name = "user_info")
 @Entity
 public class User  extends SuperEntity {
 

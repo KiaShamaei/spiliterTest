@@ -30,6 +30,15 @@ The following guides illustrate how to use some features project:
 * [ you can find Swagger doc in http://localhost:8098/snapp/swagger-ui/index.html ]
 * [ or run this command "$mvn spring-boot:run" ]
 
+### How to work this app
+Firstly call /register method and add user 
+then /login with this user and get jwtToken put this token in header of all noAuth endpoint
+-------------
+to work with this app follow this step :
+1.add users
+2.add Group (gang)
+3.add bill 
+
 
 
 ### Reference Documentation
