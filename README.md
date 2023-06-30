@@ -1,14 +1,13 @@
 # Getting Started
- this is a backend sample project ready for SnappPay which use docker and git as thirdParty.  
+ This is a backend sample project ready for SnappPay, which uses Docker and Git as thirdParty.  
 
 ### Requirements
 The fully fledged server uses the following:
 - Spring Framework
 - SpringBoot
 ### Dependencies
-There are a number of third-party dependencies used in the project. 
+There are numbers of third-party dependencies used in the project. 
 Browse the Maven pom.xml file for details of libraries and versions used.
-### Build Needs
 - java 1.17 or higher
 - docker desktop
 - Maven 3.1.1 or higher
@@ -26,8 +25,7 @@ The following guides illustrate how to use some features project:
 * [ to examine dataBase "$docker exec -it <container_id> bash" this make bash after that "$mysql -u <username> -p<password> -h localhost <database_name>" ]
 * [ run this command "$java -jar target/spiliter-0.0.1-SNAPSHOT.jar This will start the application and run on port::8098 which define in application.properties]
 * [ or run this command "$mvn spring-boot:run" ]
-* [ context path for all api is snapp ]
-* [ you can find Swagger doc in http://localhost:8098/snapp/swagger-ui/index.html ]
+* [ you can find Swagger doc in http://localhost:8098/swagger-ui/index.html ]
 * [ or run this command "$mvn spring-boot:run" ]
 
 ### How to work this app
@@ -38,6 +36,7 @@ to work with this app follow this step :
 1.add users
 2.add Group (gang)
 3.add bill 
+4.report bill or pay
 
 
 

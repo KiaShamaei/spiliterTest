@@ -38,7 +38,6 @@ public class GroupController {
     @GetMapping(value = "/group")
     @Operation(summary = "this method return a list of all groups" ,description = "List<GroupResponseDto>")
     public ResponseEntity<List<GroupResponseDto>> getGroups() {
-
         List<GroupResponseDto> groupList = groupServiceImpl.getAllGroups();
         return new ResponseEntity<>(groupList, HttpStatus.OK);
     }
@@ -46,7 +45,6 @@ public class GroupController {
     @PostMapping(value = "/group/addUsers")
     @Operation(summary = "this method add a user to a group" ,description = "Group")
     public ResponseEntity<Group> addUsersToGroup(@RequestBody GroupRequestDto groupRequestDto) {
-
         groupServiceImpl.addUserToGroup(groupRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
