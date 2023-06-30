@@ -6,14 +6,14 @@ The fully fledged server uses the following:
 - Spring Framework
 - SpringBoot
 ### Dependencies
-There are numbers of third-party dependencies used in the project. 
+There is a number of third-party dependencies which are used in the project. 
 Browse the Maven pom.xml file for details of libraries and versions used.
 - java 1.17 or higher
 - docker desktop
 - Maven 3.1.1 or higher
 - Git
 ### Guides
-The following guides illustrate how to use some features project:
+The following guides illustrate how to use some features of the project:
 
 * [ Clone the project ]
 * [ Run below commands on the root of project in order ]
@@ -28,11 +28,11 @@ The following guides illustrate how to use some features project:
 * [ you can find Swagger doc in http://localhost:8098/swagger-ui/index.html ]
 * [ or run this command "$mvn spring-boot:run" ]
 
-### How to work this app
+### How to work with this app
 Firstly call /register method and add user 
 then /login with this user and get jwtToken put this token in header of all noAuth endpoint
 -------------
-to work with this app follow this step :
+to work with the app follow these steps :
 1.add users
 2.add Group (gang)
 3.add bill 
@@ -41,7 +41,7 @@ to work with this app follow this step :
 
 
 ### Reference Documentation
-For further reference, please consider the following sections:
+For further references, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
 * [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.7.13/maven-plugin/reference/html/)
